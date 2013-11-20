@@ -59,7 +59,7 @@ module JavaBuildpack::Framework
 
     it 'should copy additional libraries to the lib directory' do
       Dir.mktmpdir do |root|
-        lib_directory = File.join root, 'lib'
+        lib_directory = File.join root, '.lib'
         Dir.mkdir lib_directory
 
         JavaBuildpack::Repository::ConfiguredItem.stub(:find_item).and_return(DETAILS)

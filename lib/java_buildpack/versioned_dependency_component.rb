@@ -73,13 +73,15 @@ module JavaBuildpack
     # @param [String] target_directory the path of the directory into which to expand the item
     # @param [Boolean] strip_top_level_directory Whether to strip the top-level directory when expanding. Defaults to +true+.
     # @param [String] description an optional description for the download and expansion.  Defaults to +@component_name+.
-    def download_zip(target_directory, strip_top_level_directory = true, description = @component_name)
+    def download_zip(target_directory, strip_top_level_directory = true, description = @component_name, wipe_target_directory = true)
       download(description) do |file|
         expand_start_time = Time.now
         print "       Expanding #{description} to #{target_directory} "
 
-        FileUtils.rm_rf target_directory
-        FileUtils.mkdir_p File.dirname(target_directory)
+        if wipe_target_directory
+          FileUtils.rm_rf target_directory
+          FileUtils.mkdir_p File.dirname(target_directory)
+        end
 
         if strip_top_level_directory
           Dir.mktmpdir do |root|
