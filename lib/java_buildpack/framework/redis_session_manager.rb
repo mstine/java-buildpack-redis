@@ -30,7 +30,6 @@ module JavaBuildpack::Framework
     end
 
     def compile
-      puts "Lib: #{@lib_directory}"
       download_zip @lib_directory, true, @component_name, false
     end
 
