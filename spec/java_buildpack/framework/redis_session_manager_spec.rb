@@ -29,8 +29,8 @@ module JavaBuildpack::Framework
     let(:application_cache) { double('ApplicationCache') }
 
     before do
-      $stdout = StringIO.new
-      $stderr = StringIO.new
+      #$stdout = StringIO.new
+      #$stderr = StringIO.new
     end
 
     it 'should detect WEB-INF' do
@@ -59,12 +59,16 @@ module JavaBuildpack::Framework
 
     it 'should copy additional libraries to the lib directory' do
       Dir.mktmpdir do |root|
-        lib_directory = File.join root, '.lib'
+        lib_directory = File.join root, 'lib'
         Dir.mkdir lib_directory
 
         JavaBuildpack::Repository::ConfiguredItem.stub(:find_item).and_return(DETAILS)
         JavaBuildpack::Util::ApplicationCache.stub(:new).and_return(application_cache)
         application_cache.stub(:get).with('test-uri').and_yield(File.open('spec/fixtures/stub-redis-session-manager.zip'))
+
+        Dir.new(lib_directory).each_entry do |entry|
+          puts entry
+        end
 
         RedisSessionManager.new(
           app_dir: 'spec/fixtures/container_tomcat',
@@ -72,6 +76,11 @@ module JavaBuildpack::Framework
           lib_directory: lib_directory,
           configuration: {}
         ).compile
+
+        Dir.new(lib_directory).each_entry do |entry|
+          puts entry
+        end
+
 
         expect(File.exists? File.join(lib_directory, 'commons-pool2-2.0.jar')).to be_true
         expect(File.exists? File.join(lib_directory, 'jedis-2.1.0.jar')).to be_true
