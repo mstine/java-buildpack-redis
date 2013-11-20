@@ -19,23 +19,30 @@ require 'java_buildpack/versioned_dependency_component'
 
 module JavaBuildpack::Framework
 
-  class RedisSessionManager < JavaBuildpack::BaseComponent
+  class RedisSessionManager < JavaBuildpack::VersionedDependencyComponent
 
     def initialize(context)
       super('Redis Session Manager', context)
     end
 
-    def detect
-      if @application.child(WEB_INF_DIRECTORY).exist?
-        'redis-session-manager=0.0.1'
-      else
-        nil
-      end
+    def supports?
+      @application.child(WEB_INF_DIRECTORY).exist?
+    end
+
+    def compile
+      download_zip @lib_directory
+    end
+
+    def release
     end
 
     private
 
     WEB_INF_DIRECTORY = 'WEB-INF'.freeze
+
+    def zip_name
+      "#{id @version}.zip"
+    end
 
   end
 

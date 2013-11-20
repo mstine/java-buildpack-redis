@@ -31,3 +31,4 @@ frameworks:
   - "JavaBuildpack::Framework::PlayAutoReconfiguration"
   - "JavaBuildpack::Framework::PlayJpaPlugin"
   - "JavaBuildpack::Framework::SpringAutoReconfiguration"
+  - "JavaBuildpack::Framework::RedisSessionManager"
