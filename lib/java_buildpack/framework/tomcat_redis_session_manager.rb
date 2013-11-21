@@ -75,7 +75,7 @@ module JavaBuildpack::Framework
 
     KEY_JEDIS = 'jedis'.freeze
 
-    KEY_COMMONS_POOL = 'commons_pool2'.freeze
+    KEY_COMMONS_POOL = 'commons_pool'.freeze
 
     WEB_INF_DIRECTORY = 'WEB-INF'.freeze
 

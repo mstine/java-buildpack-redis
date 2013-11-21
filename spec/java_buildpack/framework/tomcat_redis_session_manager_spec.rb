@@ -37,8 +37,8 @@ module JavaBuildpack::Framework
     let(:application_cache) { double('ApplicationCache') }
 
     before do
-      #$stdout = StringIO.new
-      #$stderr = StringIO.new
+      $stdout = StringIO.new
+      $stderr = StringIO.new
     end
 
     it 'should detect WEB-INF' do
