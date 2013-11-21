@@ -136,7 +136,7 @@ module JavaBuildpack::Container
             service_hash['credentials']['port'],
             service_hash['credentials']['password'])
 
-      print r_struct
+      puts "Cache Host: #{r_struct.host}"
 
       r_struct
     end
