@@ -135,6 +135,10 @@ module JavaBuildpack::Container
       r_struct.new(service_hash['credentials']['host'],
             service_hash['credentials']['port'],
             service_hash['credentials']['password'])
+
+      print r_struct
+
+      r_struct
     end
 
     def extra_applications_directory
