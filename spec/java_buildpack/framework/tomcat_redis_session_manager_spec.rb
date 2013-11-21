@@ -71,8 +71,8 @@ module JavaBuildpack::Framework
 
     it 'should copy additional libraries to the lib directory' do
       Dir.mktmpdir do |root|
-        lib_directory = File.join root, 'lib'
-        Dir.mkdir lib_directory
+        container_lib_directory = File.join root, 'container_libs'
+        Dir.mkdir container_lib_directory
 
         JavaBuildpack::Repository::ConfiguredItem.stub(:find_item)
         .and_return(SESSION_MANAGER_DETAILS,JEDIS_DETAILS,COMMONS_POOL_DETAILS)
@@ -85,13 +85,13 @@ module JavaBuildpack::Framework
         TomcatRedisSessionManager.new(
           app_dir: 'spec/fixtures/container_tomcat',
           application: JavaBuildpack::Application.new('spec/fixtures/container_tomcat'),
-          lib_directory: lib_directory,
+          container_lib_directory: container_lib_directory,
           configuration: {}
         ).compile
 
-        expect(File.exists? File.join(lib_directory, 'tomcat-redis-session-manager-1.2.0.jar')).to be_true
-        expect(File.exists? File.join(lib_directory, 'jedis-2.1.0.jar')).to be_true
-        expect(File.exists? File.join(lib_directory, 'commons-pool2-2.0.0.jar')).to be_true
+        expect(File.exists? File.join(container_lib_directory, 'tomcat-redis-session-manager-1.2.0.jar')).to be_true
+        expect(File.exists? File.join(container_lib_directory, 'jedis-2.1.0.jar')).to be_true
+        expect(File.exists? File.join(container_lib_directory, 'commons-pool2-2.0.0.jar')).to be_true
       end
 
 

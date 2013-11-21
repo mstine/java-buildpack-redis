@@ -45,9 +45,10 @@ module JavaBuildpack::Framework
     end
 
     def compile
-      download_jar(@session_manager_version, @session_manager_uri, session_manager_jar_name, @lib_directory)
-      download_jar(@jedis_version, @jedis_uri, jedis_jar_name, @lib_directory, "JEDIS")
-      download_jar(@commons_pool_version, @commons_pool_uri, commons_pool_jar_name, @lib_directory, "Commons Pool")
+      FileUtils.mkdir_p(container_libs_directory)
+      download_jar(@session_manager_version, @session_manager_uri, session_manager_jar_name, container_libs_directory)
+      download_jar(@jedis_version, @jedis_uri, jedis_jar_name, container_libs_directory, "JEDIS")
+      download_jar(@commons_pool_version, @commons_pool_uri, commons_pool_jar_name, container_libs_directory, "Commons Pool")
     end
 
     def release
@@ -89,6 +90,14 @@ module JavaBuildpack::Framework
 
     def commons_pool_jar_name
       "commons-pool2-#{@commons_pool_version}.jar"
+    end
+
+    def container_libs_directory
+      if @container_lib_directory.nil?
+        @application.component_directory 'container-libs'
+      else
+        @container_lib_directory
+      end
     end
 
   end
