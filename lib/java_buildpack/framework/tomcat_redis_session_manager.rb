@@ -89,7 +89,7 @@ module JavaBuildpack::Framework
     end
 
     def commons_pool_jar_name
-      "commons-pool2-#{@commons_pool_version}.jar"
+      "commons-pool-#{@commons_pool_version}.jar"
     end
 
     def container_libs_directory

@@ -30,7 +30,7 @@ module JavaBuildpack::Framework
 
     JEDIS_DETAILS = [JEDIS_VERSION, 'test-jedis-uri']
 
-    COMMONS_POOL_VERSION = JavaBuildpack::Util::TokenizedVersion.new('2.0.0')
+    COMMONS_POOL_VERSION = JavaBuildpack::Util::TokenizedVersion.new('1.6.0')
 
     COMMONS_POOL_DETAILS = [COMMONS_POOL_VERSION, 'test-commons-pool-uri']
 
@@ -53,7 +53,7 @@ module JavaBuildpack::Framework
 
       expect(detected).to include('tomcat-redis-session-manager=1.2.0')
       expect(detected).to include('jedis=2.1.0')
-      expect(detected).to include('commons-pool=2.0.0')
+      expect(detected).to include('commons-pool=1.6.0')
     end
 
     it 'should not detect when WEB-INF is absent' do
@@ -91,7 +91,7 @@ module JavaBuildpack::Framework
 
         expect(File.exists? File.join(container_lib_directory, 'tomcat-redis-session-manager-1.2.0.jar')).to be_true
         expect(File.exists? File.join(container_lib_directory, 'jedis-2.1.0.jar')).to be_true
-        expect(File.exists? File.join(container_lib_directory, 'commons-pool2-2.0.0.jar')).to be_true
+        expect(File.exists? File.join(container_lib_directory, 'commons-pool-1.6.0.jar')).to be_true
       end
 
 
