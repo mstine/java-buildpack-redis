@@ -33,6 +33,12 @@ module JavaBuildpack::Container
 
     let(:application_cache) { double('ApplicationCache') }
 
+    let(:vcap_services) { {'redis-n/a' => ['credentials' => {
+        'host' => 'host.domain.com',
+        'port' => '12345',
+        'password' => 'supersecure'
+    }]}}
+
     before do
       $stdout = StringIO.new
       $stderr = StringIO.new
@@ -99,7 +105,8 @@ module JavaBuildpack::Container
         Tomcat.new(
             app_dir: root,
             application: JavaBuildpack::Application.new(root),
-            configuration: {}
+            configuration: {},
+            vcap_services: vcap_services
         ).compile
 
         tomcat_dir = File.join root, '.tomcat'
@@ -138,7 +145,8 @@ module JavaBuildpack::Container
         Tomcat.new(
             app_dir: root,
             application: application,
-            configuration: {}
+            configuration: {},
+            vcap_services: vcap_services
         ).compile
 
         root_webapp = File.join root, '.tomcat', 'webapps', 'ROOT'
@@ -175,7 +183,8 @@ module JavaBuildpack::Container
             app_dir: root,
             application: application,
             configuration: {},
-            lib_directory: lib_directory
+            lib_directory: lib_directory,
+            vcap_services: vcap_services
         ).compile
 
         root_webapp = File.join root, '.tomcat', 'webapps', 'ROOT'
@@ -209,7 +218,8 @@ module JavaBuildpack::Container
             app_dir: root,
             application: application,
             configuration: {},
-            lib_directory: lib_directory
+            lib_directory: lib_directory,
+            vcap_services: vcap_services
         ).compile
 
         root_webapp = File.join root, '.tomcat', 'webapps', 'ROOT'
@@ -238,7 +248,8 @@ module JavaBuildpack::Container
             app_dir: root,
             application: JavaBuildpack::Application.new(root),
             lib_directory: lib_directory,
-            configuration: {}
+            configuration: {},
+            vcap_services: vcap_services
         ).compile
 
         lib = File.join root, '.tomcat', 'webapps', 'ROOT', 'WEB-INF', 'lib'
@@ -275,7 +286,8 @@ module JavaBuildpack::Container
         Tomcat.new(
             app_dir: root,
             application: JavaBuildpack::Application.new(root),
-            configuration: {}
+            configuration: {},
+            vcap_services: vcap_services
         ).compile
 
         insight_test_dir = File.join root, '.tomcat', 'webapps', 'framework_spring_insight'
@@ -301,7 +313,8 @@ module JavaBuildpack::Container
         Tomcat.new(
             app_dir: root,
             application: JavaBuildpack::Application.new(root),
-            configuration: {}
+            configuration: {},
+            vcap_services: vcap_services
         ).compile
 
         insight_test_lib = File.join root, '.tomcat', 'lib', 'insight-weaver-1.2.4-CI-SNAPSHOT.jar'

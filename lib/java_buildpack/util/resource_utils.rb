@@ -45,6 +45,20 @@ module JavaBuildpack::Util
       File.join(File.expand_path(RESOURCES, File.dirname(__FILE__)), subdirectory)
     end
 
+    # Generates a resource based on a bound service and places in the desired directory.
+    #
+    # @param [String] template the name of the template file
+    # @param [String] service the service data
+    # @param [String] target_directory the target directory for writing the generated resource
+    # @param [String] target_file the name of the file to write
+    def self.generate_bound_resource_from_template(template, service, target_directory, target_file)
+      template_file = File.open(File.join(get_resources('templates'), template), 'r').read
+      erb = ERB.new(template_file)
+      File.open(File.join(target_directory, target_file), 'w+') do |file|
+        file.write(erb.result(binding))
+      end
+    end
+
     private
 
     RESOURCES = File.join('..', '..', '..', 'resources').freeze

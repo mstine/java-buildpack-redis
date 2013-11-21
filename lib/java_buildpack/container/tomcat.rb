@@ -22,6 +22,7 @@ require 'java_buildpack/repository/configured_item'
 require 'java_buildpack/util/format_duration'
 require 'java_buildpack/util/java_main_utils'
 require 'java_buildpack/util/resource_utils'
+require 'java_buildpack/util/service_utils'
 
 module JavaBuildpack::Container
 
@@ -119,8 +120,21 @@ module JavaBuildpack::Container
       shell "mkdir -p #{tomcat_home}"
       shell "tar xzf #{file.path} -C #{tomcat_home} --strip 1 --exclude webapps --exclude #{File.join 'conf', 'server.xml'} --exclude #{File.join 'conf', 'context.xml'} 2>&1"
 
+      JavaBuildpack::Util::ResourceUtils.generate_bound_resource_from_template 'redis-context.xml.erb',
+                                                                               redis_service,
+                                                                               JavaBuildpack::Util::ResourceUtils.get_resources('tomcat/conf'),
+                                                                               'context.xml'
       JavaBuildpack::Util::ResourceUtils.copy_resources('tomcat', tomcat_home)
       puts "(#{(Time.now - expand_start_time).duration})"
+    end
+
+    def redis_service
+      service_hash = JavaBuildpack::Util::ServiceUtils.find_service(@vcap_services, /redis/)
+
+      r_struct = Struct.new(:host, :port, :password)
+      r_struct.new(service_hash['host'],
+            service_hash['port'],
+            service_hash['password'])
     end
 
     def extra_applications_directory

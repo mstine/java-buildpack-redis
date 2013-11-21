@@ -34,6 +34,24 @@ module JavaBuildpack::Util
       expect { ResourceUtils.copy_resources 'test', Dir.tmpdir }.to raise_error
     end
 
+    it 'should generate the correct resource based on the template and service' do
+      service = double('service')
+      service.stub(:host => 'host.domain.com')
+      service.stub(:port => '12345')
+      service.stub(:password => 'supersecure')
+
+      Dir.mktmpdir do |root|
+        ResourceUtils.generate_bound_resource_from_template('redis-context.xml.erb',
+          service, root, 'context.xml')
+
+        contents = File.read(File.join(root, 'context.xml'))
+
+        contents.should match "host=\"host.domain.com\""
+        contents.should match "port=\"12345\""
+        contents.should match "password=\"supersecure\""
+      end
+    end
+
   end
 
 end

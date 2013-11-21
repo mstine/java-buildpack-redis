@@ -17,4 +17,10 @@
 -->
 
 <Context allowLinking='true'>
+  <Valve className="com.radiadesign.catalina.session.RedisSessionHandlerValve" />
+  <Manager className="com.radiadesign.catalina.session.RedisSessionManager"
+           host="<%=service.host%>"
+           port="<%=service.port%>"
+           password="<%=service.password%>"
+           maxInactiveInterval="60" />
 </Context>
