@@ -15,5 +15,11 @@
 
 # Configuration for the Redis Session Manager framework
 ---
-version: 0.0.+
-repository_root: "https://s3.amazonaws.com/redis-session-manager"
+version: 1.2.0
+repository_root: "https://s3.amazonaws.com/tomcat-redis-session-manager"
+jedis:
+  version: 2.1.0
+  repository_root: "https://s3.amazonaws.com/jedis"
+commons_pool:
+  version: 2.0.0
+  repository_root: "https://s3.amazonaws.com/commons-pool
