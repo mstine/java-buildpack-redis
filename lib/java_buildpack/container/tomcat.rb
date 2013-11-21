@@ -132,13 +132,13 @@ module JavaBuildpack::Container
       service_hash = JavaBuildpack::Util::ServiceUtils.find_service(@vcap_services, /redis/)
 
       r_struct = Struct.new(:host, :port, :password)
-      r_struct.new(service_hash['credentials']['host'],
+      r = r_struct.new(service_hash['credentials']['host'],
             service_hash['credentials']['port'],
             service_hash['credentials']['password'])
 
-      puts "Cache Host: #{r_struct.host}"
+      puts "Cache Host: #{r.host}"
 
-      r_struct
+      r
     end
 
     def extra_applications_directory
