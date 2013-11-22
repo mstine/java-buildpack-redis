@@ -133,7 +133,7 @@ module JavaBuildpack::Container
       service_hash = JavaBuildpack::Util::ServiceUtils.find_service(@vcap_services, /redis/)
 
       r_struct = Struct.new(:host, :port, :password)
-      r = r_struct.new(service_hash['credentials']['host'],
+      r = r_struct.new(service_hash['credentials']['hostname'],
             service_hash['credentials']['port'],
             service_hash['credentials']['password'])
 
