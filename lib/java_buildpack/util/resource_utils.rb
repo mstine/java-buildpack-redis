@@ -16,6 +16,7 @@
 
 require 'java_buildpack/util'
 require 'open3'
+require 'erb'
 
 module JavaBuildpack::Util
 
