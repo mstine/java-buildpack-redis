@@ -35,8 +35,9 @@ module JavaBuildpack::Util
     end
 
     it 'should generate the correct resource based on the template and service' do
-      r_struct = Struct.new(:host, :port, :password)
-      service = r_struct.new('host.domain.com',12345,'supersecure')
+      service = {'credentials' => {'host' => 'host.domain.com',
+                                   'port' => '12345',
+                                   'password' => 'supersecure'}}
 
       Dir.mktmpdir do |root|
         ResourceUtils.generate_bound_resource_from_template('redis-context.xml.erb',

@@ -129,12 +129,7 @@ module JavaBuildpack::Container
     end
 
     def redis_service
-      service_hash = JavaBuildpack::Util::ServiceUtils.find_service(@vcap_services, /redis/)
-
-      r_struct = Struct.new(:host, :port, :password)
-      r_struct.new(service_hash['credentials']['hostname'],
-            service_hash['credentials']['port'],
-            service_hash['credentials']['password'])
+      JavaBuildpack::Util::ServiceUtils.find_service(@vcap_services, /redis/)
     end
 
     def extra_applications_directory
