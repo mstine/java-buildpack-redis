@@ -54,9 +54,11 @@ module JavaBuildpack::Util
     def self.generate_bound_resource_from_template(template, service, target_directory, target_file)
       template_file = File.open(File.join(get_resources('templates'), template), 'r').read
       erb = ERB.new(template_file)
+      puts "Before open..."
       File.open(File.join(target_directory, target_file), 'w+') do |file|
         file.write(erb.result(binding))
       end
+      puts "After open..."
     end
 
     private
