@@ -129,6 +129,7 @@ module JavaBuildpack::Container
     end
 
     def redis_service
+      puts "VCAP_SERVICES=#{@vcap_services}"
       service_hash = JavaBuildpack::Util::ServiceUtils.find_service(@vcap_services, /redis/)
 
       r_struct = Struct.new(:host, :port, :password)
