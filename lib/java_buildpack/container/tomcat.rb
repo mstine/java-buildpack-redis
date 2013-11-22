@@ -120,10 +120,12 @@ module JavaBuildpack::Container
       shell "mkdir -p #{tomcat_home}"
       shell "tar xzf #{file.path} -C #{tomcat_home} --strip 1 --exclude webapps --exclude #{File.join 'conf', 'server.xml'} --exclude #{File.join 'conf', 'context.xml'} 2>&1"
 
+      puts "Before generate..."
       JavaBuildpack::Util::ResourceUtils.generate_bound_resource_from_template 'redis-context.xml.erb',
                                                                                redis_service,
                                                                                JavaBuildpack::Util::ResourceUtils.get_resources('tomcat/conf'),
                                                                                'context.xml'
+      puts "After generate..."
       JavaBuildpack::Util::ResourceUtils.copy_resources('tomcat', tomcat_home)
       puts "(#{(Time.now - expand_start_time).duration})"
     end
