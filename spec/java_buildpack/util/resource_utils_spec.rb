@@ -35,7 +35,7 @@ module JavaBuildpack::Util
     end
 
     it 'should generate the correct resource based on the template and service' do
-      service = {'credentials' => {'host' => 'host.domain.com',
+      service = {'credentials' => {'hostname' => 'host.domain.com',
                                    'port' => '12345',
                                    'password' => 'supersecure'}}
 
