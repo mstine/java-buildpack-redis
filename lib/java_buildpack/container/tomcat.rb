@@ -120,28 +120,21 @@ module JavaBuildpack::Container
       shell "mkdir -p #{tomcat_home}"
       shell "tar xzf #{file.path} -C #{tomcat_home} --strip 1 --exclude webapps --exclude #{File.join 'conf', 'server.xml'} --exclude #{File.join 'conf', 'context.xml'} 2>&1"
 
-      puts "Before generate..."
       JavaBuildpack::Util::ResourceUtils.generate_bound_resource_from_template 'redis-context.xml.erb',
                                                                                redis_service,
                                                                                JavaBuildpack::Util::ResourceUtils.get_resources('tomcat/conf'),
                                                                                'context.xml'
-      puts "After generate..."
       JavaBuildpack::Util::ResourceUtils.copy_resources('tomcat', tomcat_home)
       puts "(#{(Time.now - expand_start_time).duration})"
     end
 
     def redis_service
-      puts "VCAP_SERVICES=#{@vcap_services}"
       service_hash = JavaBuildpack::Util::ServiceUtils.find_service(@vcap_services, /redis/)
 
       r_struct = Struct.new(:host, :port, :password)
-      r = r_struct.new(service_hash['credentials']['hostname'],
+      r_struct.new(service_hash['credentials']['hostname'],
             service_hash['credentials']['port'],
             service_hash['credentials']['password'])
-
-      puts "Cache Host: #{r.host}"
-
-      r
     end
 
     def extra_applications_directory
